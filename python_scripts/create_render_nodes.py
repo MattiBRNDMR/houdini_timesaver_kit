@@ -23,6 +23,7 @@ def create_render_nodes():
             
             #if volume, get path to file (read from filecache)
             path_to_volume_cache_node = hou.ui.selectNode(initial_node = hou.node(target_node_path), title="filecache for this volume")
+            
             check_filecache = hou.node(path_to_volume_cache_node).type().name()
             #check if its filecache or ropoutput
             if check_filecache == "filecache":
@@ -46,22 +47,20 @@ def create_render_nodes():
                 
                 
                 
-                
-                
-                
-            
-            
-            
-            
-        
-        
-        
         else:
     
             if len(prims) and len(points) > 0: #if geo is solid (has polys)
                
                 print "render node for " + str(node) + " contains polygon data"
-            
+                #get render node name
+                render_node_name = hou.ui.readInput("Rendernode name for " + str(node), buttons=("Create", "Cancel"))
+                
+                #when button create has been clicked, create render_geo hda and write the path to the selected node into object merge
+                if render_node_name[0] == 0:
+                    render_node = scene_root.createNode("render_geo", "RENDER_GEOMETRY_" + render_node_name[1].replace(" ", "_"))
+                    render_node.setColor(hou.Color((1.0,0.0,0.0)))
+                    render_node.parm("objpath").set(target_node_path)
+                
             
             
             
@@ -70,7 +69,13 @@ def create_render_nodes():
                 if len(prims) == 0 and len(points) > 0: #if geo is points (particles)
                     
                     print "render node for " + str(node) + " contains point data"
-       
+                    render_node_name = hou.ui.readInput("Rendernode name for " + str(node), buttons=("Create", "Cancel"))
+                
+                     #when button create has been clicked, create render_geo hda and write the path to the selected node into object merge
+                    if render_node_name[0] == 0:
+                       render_node = scene_root.createNode("matti_render_particles", "RENDER_PARTICLES_" + render_node_name[1].replace(" ", "_"))
+                       render_node.setColor(hou.Color((1.0,0.0,0.0)))
+                       render_node.parm("objpath1").set(target_node_path)
         
         
         
