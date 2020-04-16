@@ -11,6 +11,10 @@
   </toolshelf>
 
   <tool name="mb_houtskit_create_renderoutputs" label="Render Output Nodes" icon="PLASMA_App">
+    <toolMenuContext name="network">
+      <contextNetType>OBJ</contextNetType>
+      <contextNetType>SOP</contextNetType>
+    </toolMenuContext>
     <script scriptType="python"><![CDATA[import hou
 
 def create_render_nodes():
@@ -82,7 +86,13 @@ def create_render_nodes():
                 if len(prims) == 0 and len(points) > 0: #if geo is points (particles)
                     
                     print "render node for " + str(node) + " contains point data"
-                    
+                    render_node_name = hou.ui.readInput("Rendernode name for " + str(node), buttons=("Create", "Cancel"))
+                
+                     #when button create has been clicked, create render_geo hda and write the path to the selected node into object merge
+                    if render_node_name[0] == 0:
+                       render_node = scene_root.createNode("matti_render_particles", "RENDER_PARTICLES_" + render_node_name[1].replace(" ", "_"))
+                       render_node.setColor(hou.Color((1.0,0.0,0.0)))
+                       render_node.parm("objpath1").set(target_node_path)
         
         
         
