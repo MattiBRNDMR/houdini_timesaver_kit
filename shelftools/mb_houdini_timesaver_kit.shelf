@@ -55,12 +55,19 @@ def create_render_nodes():
                 path_to_volume_abs = path_to_volume.replace("$OS", str(hou.node(path_to_volume_cache_node).name()))
                 #print path_to_volume_abs
             
+            if check_filecache == "file":
+                print "its a file"
+                path_to_volume = hou.node(path_to_volume_cache_node).parm("file").rawValue()
+                path_to_volume_abs = path_to_volume.replace("$OS", str(hou.node(path_to_volume_cache_node).name()))
+                #print path_to_volume_abs
+                
             
             #if button create was clicked
             if render_node_name[0] == 0:
                 render_node = scene_root.createNode("matti_render_volumes", "RENDER_VOLUME_" + render_node_name[1].replace(" ", "_"))
                 render_node.setColor(hou.Color((1.0,0.0,0.0)))
                 render_node.parm("file").set(path_to_volume_abs)
+                render_node.moveToGoodPosition()
                 
                 
                 
@@ -77,7 +84,7 @@ def create_render_nodes():
                     render_node = scene_root.createNode("render_geo", "RENDER_GEOMETRY_" + render_node_name[1].replace(" ", "_"))
                     render_node.setColor(hou.Color((1.0,0.0,0.0)))
                     render_node.parm("objpath").set(target_node_path)
-                
+                    render_node.moveToGoodPosition()
             
             
             
@@ -93,6 +100,7 @@ def create_render_nodes():
                        render_node = scene_root.createNode("matti_render_particles", "RENDER_PARTICLES_" + render_node_name[1].replace(" ", "_"))
                        render_node.setColor(hou.Color((1.0,0.0,0.0)))
                        render_node.parm("objpath1").set(target_node_path)
+                       render_node.moveToGoodPosition()
         
         
         
@@ -121,7 +129,7 @@ create_render_nodes()]]></script>
         if null_name[0] == 0:
             node_parent_dir = node.node("..")
             #empty spaces will be replaced with underscores automaticly
-            out_null = node_parent_dir.createNode("null", "OUT" + "_" + null_name[1].replace(" ", "_"))
+            out_null = node_parent_dir.createNode("null", "OUT" + "_" + null_name[1].replace(" ", "_").upper())
             out_null.setNextInput(node)
             out_null.setPosition(node.position())
             out_null.move([0,-1])
