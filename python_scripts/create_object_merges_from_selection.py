@@ -38,3 +38,5 @@ def object_merge_nodes():
     for x in newNodes:
         x.destroy()
     
+    
+object_merge_nodes()
