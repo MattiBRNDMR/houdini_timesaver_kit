@@ -1,0 +1,15 @@
+import hou
+
+is_int = hou.playbar.usesIntegerFrames()
+
+if is_int == True:
+    hou.playbar.setRealTime(False)
+    hou.playbar.setUseIntegerFrames(False)
+    hou.playbar.setFrameIncrement(0.1)
+    hou.ui.setStatusMessage("Disabling Integer Frames, enabling Subframes with 0.1 Increment")
+    
+if is_int == False:
+    hou.playbar.setRealTime(True)
+    hou.playbar.setUseIntegerFrames(True)
+    hou.playbar.setFrameIncrement(int(1.0))
+    hou.ui.setStatusMessage("Disabling Subframes, enabling Integer Frames")
