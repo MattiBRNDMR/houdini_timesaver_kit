@@ -1,8 +1,6 @@
 def object_merge_nodes():
 
     ctrl_click = kwargs['ctrlclick'] or kwargs['cmdclick']
-    
-    print(ctrl_click)
 
     #fetch selected nodes
     nodes = hou.selectedNodes()
