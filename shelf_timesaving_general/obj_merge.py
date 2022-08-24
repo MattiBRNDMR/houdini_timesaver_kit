@@ -1,12 +1,13 @@
 def object_merge_nodes():
 
     ctrl_click = kwargs['ctrlclick'] or kwargs['cmdclick']
+    
+    print(ctrl_click)
 
     #fetch selected nodes
     nodes = hou.selectedNodes()
-    amount = len(nodes)
     iter = 0
-    totalnodes = [ ]
+    
     
     for node in nodes:
         
@@ -28,8 +29,7 @@ def object_merge_nodes():
             
         obj_merge.parm("xformtype").set(1)
         obj_merge.setColor(hou.Color((0,0.5,1)))
-        obj_merge.move([iter*2, 0])
-        
+        obj_merge.move([iter*4, 0])
         obj_merge.setSelected(True)
         
         
